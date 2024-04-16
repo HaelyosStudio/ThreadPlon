@@ -1,1 +1,6 @@
 @import url(./root.css);
+
+.navIcon {
+        width: 20px;
+        height: 20px;
+}

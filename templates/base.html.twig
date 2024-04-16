@@ -25,28 +25,41 @@
 		{% block navBar %}
 			<div class="d-flex flex-row justify-content-center">
 				<nav class="navbar navbar-expand-lg navbar-light bg-light flex-column align-items-stretch navContainer" style="height: 100vh;">
-					<div class="d-flex flex-column justify-content-between container-fluid text-center" style="height: 90vh;">
+					<div class="d-flex flex-column container-fluid text-center gap-5">
 						<a class="navbar-brand" href="#">
 							<img src="{{ asset('images/logo.png') }}" alt="Logo" width="325" height="55">
 						</a>
 						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
-						<div class="collapse navbar-collapse flex-column align-items-stretch flex-grow-1" id="navbarSupportedContent">
-							<ul class="navbar-nav flex-column">
+						<div class="collapse navbar-collapse flex-column align-items-stretch flex-grow-1 gap-5" id="navbarSupportedContent">
+							<ul class="navbar-nav flex-column gap-3">
 								<li class="nav-item">
-									<a class="nav-link active" aria-current="page" href="#">Home</a>
+									<a class="nav-link active" aria-current="page" href="#">
+										<img src="{{ asset('images/Home.png') }}" alt="Home" style="width: 25px; height: 25px;">
+										Home
+									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">Profile</a>
+									<a class="nav-link" href="#">
+										<img src="{{ asset('images/Profile.png') }}" alt="Profile" style="width: 25px; height: 25px;">
+										Profile
+									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">Search</a>
+									<a class="nav-link" href="#">
+										<img src="{{ asset('images/Search.png') }}" alt="Search" style="width: 25px; height: 25px;">
+										Search
+									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">Settings</a>
+									<a class="nav-link" href="#">
+										<img src="{{ asset('images/Settings.png') }}" alt="Settings" style="width: 25px; height: 25px;">
+										Settings
+									</a>
 								</li>
 							</ul>
+
 							<div class="navbar-text mt-auto">
 								{% if app.user %}
 									<p class="text-muted">Welcome,
