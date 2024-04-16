@@ -1,0 +1,9 @@
+@import url(./root.css);
+
+.navContainer {
+    background-color: var(--tertiaryColor) !important;
+    
+    a {
+        color: var(--mainColor) !important;
+    }
+}

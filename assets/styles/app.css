@@ -1,0 +1,32 @@
+@import url(./register.css);
+@import url(./root.css);
+
+body {
+    background-color: var(--tertiaryColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 50px;
+}
+
+h1, h2, h3, h4, label {
+    color: var(--mainColor);
+}
+
+a {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.navContainer {
+    position: fixed;
+    top: 37px;
+    left: 400px;
+}
+
+.searchContainer {
+    position: fixed;
+    top: 50px;
+    right: 400px;
+}
