@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ThreadController extends AbstractController
 {
-    #[Route('/threads', name: 'app_thread_list')]
+    #[Route('/', name: 'app_thread_list')]
     public function threadList(EntityManagerInterface $entityManager): Response
     {
         $threadRepository = $entityManager->getRepository(Thread::class);

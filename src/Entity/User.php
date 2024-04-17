@@ -55,9 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $responses;
 
     /**
-     * @var Collection<int, thread>
+     * @var Collection<int, Thread>
      */
-    #[ORM\OneToMany(targetEntity: thread::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Thread::class, mappedBy: 'user')]
     private Collection $thread;
 
     #[ORM\Column(length: 20)]
@@ -75,6 +75,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->threadVotes = new ArrayCollection();
         $this->responses = new ArrayCollection();
         $this->thread = new ArrayCollection();
+        $this->created = new \DateTimeImmutable();
+        $this->edited = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

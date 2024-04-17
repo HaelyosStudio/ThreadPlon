@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="d-flex flex-column align-items-center" style="height: 100vh;">
+    <div class="d-flex flex-column align-items-center threadContainer" style="height: 100vh;">
         {% for thread in threads %}
             <div class="mb-3">
                 <a href="{{ path('app_thread', {'id': thread.id}) }}">
@@ -20,7 +20,7 @@
                                     <small class="text-muted">Edited:
                                         {{ thread.edited|date('Y-m-d H:i:s') }}</small>
                                 </div>
-                                <h1 class="card-title">{{ thread.title }}</h1>
+                                <h1 class="card-title threadTitle">{{ thread.title }}</h1>
                                 <p class="card-text">{{ thread.main }}</p>
                             </div>
                         </div>

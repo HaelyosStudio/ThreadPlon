@@ -19,23 +19,25 @@
 				{{ importmap('app') }}
 			{% endblock %}
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+			<script src="{{ asset('search.js') }}"></script>
 		{% endblock %}
 	</head>
 	<body>
 		{% block navBar %}
 			<div class="d-flex flex-row justify-content-center">
 				<nav class="navbar navbar-expand-lg navbar-light bg-light flex-column align-items-stretch navContainer" style="height: 100vh;">
-					<div class="d-flex flex-column container-fluid text-center gap-5">
+					<div class="d-flex flex-column container-fluid text-center gap-5 navContent">
 						<a class="navbar-brand" href="#">
 							<img src="{{ asset('images/logo.png') }}" alt="Logo" width="325" height="55">
 						</a>
 						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
-						<div class="collapse navbar-collapse flex-column align-items-stretch flex-grow-1 gap-5" id="navbarSupportedContent">
-							<ul class="navbar-nav flex-column gap-3">
+						<div class="collapse navbar-collapse flex-column align-items-stretch flex-grow-1 gap-5 navLinksBox" id="navbarSupportedContent">
+							<ul class="navbar-nav d-flex align-items-start flex-column gap-5 navLinksUl">
 								<li class="nav-item">
-									<a class="nav-link active" aria-current="page" href="#">
+									<a class="nav-link active" aria-current="page" href="{{ path('app_thread_list')}}">
 										<img src="{{ asset('images/Home.png') }}" alt="Home" style="width: 25px; height: 25px;">
 										Home
 									</a>
@@ -47,10 +49,10 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">
+									<button class="nav-link" id="searchButton">
 										<img src="{{ asset('images/Search.png') }}" alt="Search" style="width: 25px; height: 25px;">
 										Search
-									</a>
+									</button>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#">
@@ -62,10 +64,15 @@
 
 							<div class="navbar-text mt-auto">
 								{% if app.user %}
-									<p class="text-muted">Welcome,
+									<p>Welcome,
 										{{ app.user.username }}</p>
+									<a class="logoutLink" href="{{ path('app_logout') }}">Logout</a>
 								{% else %}
-									<a href="#" class="btn btn-primary">Sign In</a>
+									<div class="logButtonsBox">
+										<a href="{{ path('app_login')}}" class="btn btn-primary logButtons">Sign In</a>
+										<a href="{{ path('app_register')}}" class="btn btn-primary logButtons">Sign Up</a>
+									</div>
+
 								{% endif %}
 							</div>
 						</div>
@@ -74,11 +81,11 @@
 
 
 				{% block body %}{% endblock %}
-
-				<div class="d-none d-md-block col-md-2 searchContainer" style="width: 325px;">
+				<div id="overlay"></div>
+				<div class="d-none d-md-block searchContainer" style="width: 325px; height: 100vh;">
 					<form class="d-flex justify-content-end" role="search">
-						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
+						<input class="form-control searchBar" id="searchBar" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success searchButton" type="submit">Search</button>
 					</form>
 				</div>
 			</div>

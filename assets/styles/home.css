@@ -1,0 +1,87 @@
+@import url(./root.css);
+
+.logButtonsBox {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .logButtons {
+        background-color: var(--tertiaryColor);
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.22) 0px 6px 12px;
+        color: var(--secondaryColor) !important;
+        border: none;
+        transition-duration: 0.3s;
+        width: 100px;
+    }
+
+    .logButtons:hover {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        transform: translateY(5px);
+        transition-duration: 0.3s;
+        background-color: var(--secondaryColor);
+        color: var(--tertiaryColor) !important;
+    }
+}
+
+.navContainer {
+    position: fixed;
+    top: 0px;
+    left: 300px;
+    /* border-right: 1px solid var(--mainColor); */
+
+    .navContent {
+        margin-top: 37px;
+    }
+}
+
+.searchContainer {
+    position: fixed;
+    z-index: 1000;
+    top: 0px;
+    right: 340px;
+    /* border-left: 1px solid var(--mainColor); */
+
+    .searchBar, .searchButton {
+        margin-top: 50px;
+        width: auto;
+        transform: translateX(20px);
+    }
+
+    .searchBar {
+        border-radius: 5px 0px 0px 5px;
+        border: 1px solid var(--mainColor) !important;
+        color: var(--mainColor) !important;
+    }
+
+    .searchButton {
+        border-radius: 0px 5px 5px 0px;
+        border: 1px solid var(--mainColor) !important;
+        color: var(--mainColor) !important;
+    }
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+.navIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.navLinksBox {
+    width: 100%;
+
+    .navLinksUl {
+            width: 100%;
+    }
+}
+
+

@@ -1,6 +1,14 @@
 @import url(./root.css);
 
-.navIcon {
-        width: 20px;
-        height: 20px;
+
+.threadTitle {
+        color: var(--black) !important;
+}
+
+.threadContainer {
+        border-right: 1px solid var(--mainColor);
+        border-left: 1px solid var(--mainColor);
+        padding: 80px 25px 85px 25px;
+        height: 1000px !important;
+        overflow: auto;
 }
