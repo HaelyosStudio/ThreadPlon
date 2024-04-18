@@ -148,6 +148,17 @@ class Thread
         return $this->threadVotes;
     }
 
+    public function getTotalVotes(): int
+    {
+        $count = 0;
+        foreach ($this->getThreadVotes() as $vote) {
+            if ($vote->isVote()) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
     public function addThreadVote(ThreadVote $threadVote): static
     {
         if (!$this->threadVotes->contains($threadVote)) {

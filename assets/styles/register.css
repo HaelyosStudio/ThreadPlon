@@ -1,32 +1,5 @@
 @import url(./root.css);
 
-.navContainer {
-    background-color: var(--tertiaryColor) !important;
-    
-    a {
-        color: var(--mainColor) !important;
-    }
-
-    .logoutLink {
-        background-color: var(--tertiaryColor);
-        box-shadow: rgba(0, 0, 0, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.22) 0px 6px 12px;
-        color: var(--secondaryColor) !important;
-        border: none;
-        border-radius: 5px;
-        transition-duration: 0.3s;
-        width: 100px;
-        padding: 5px 20px;
-    }
-
-    .logoutLink:hover {
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-        transform: translateY(5px);
-        transition-duration: 0.3s;
-        background-color: var(--secondaryColor);
-        color: var(--tertiaryColor) !important;
-    }
-}
-
 .registerForm {
     width: 400px;
 }
@@ -35,8 +8,13 @@
     display: flex;
     gap: 20px;
     flex-direction: column;
+    width: 400px;
 
     div {
         margin-bottom: 15px;
+    }
+
+    .formItems {
+        width: 400px;
     }
 }

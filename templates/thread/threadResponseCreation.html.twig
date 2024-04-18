@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Response
+{% endblock %}
+
+{% block body %}
+	<div class="threadCreationBox">
+		<h1>Create Response</h1>
+
+		{{ form_start(form, {'attr': {'class': 'column'}}) }}
+		<div class="creationFormItem">
+			{{ form_label(form.main, 'Main', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.main, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="creationFormItem createButtonBox">
+			<button type="submit" class="btn createbutton">Create Response</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+
+{% endblock %}

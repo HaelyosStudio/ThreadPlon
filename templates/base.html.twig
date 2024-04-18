@@ -18,8 +18,8 @@
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 			<script src="{{ asset('search.js') }}"></script>
 		{% endblock %}
 	</head>
@@ -62,31 +62,37 @@
 								</li>
 							</ul>
 
-							<div class="navbar-text mt-auto">
+							<div class="navbar-text userBox">
 								{% if app.user %}
-									<p>Welcome,
-										{{ app.user.username }}</p>
-									<a class="logoutLink" href="{{ path('app_logout') }}">Logout</a>
+									<a class="threadButton newThreadButton" href="{{ path('app_thread_creation') }}">New Thread</a>
+									<div class="loggedUserBox">
+										<p>Welcome,
+											{{ app.user.username }}</p>
+										<a class="logoutLink" href="{{ path('app_logout') }}">Logout</a>
+									</div>
+
 								{% else %}
 									<div class="logButtonsBox">
 										<a href="{{ path('app_login')}}" class="btn btn-primary logButtons">Sign In</a>
 										<a href="{{ path('app_register')}}" class="btn btn-primary logButtons">Sign Up</a>
 									</div>
-
 								{% endif %}
 							</div>
 						</div>
 					</div>
 				</nav>
 
-
+				<div class="mainContentContainer">
 				{% block body %}{% endblock %}
-				<div id="overlay"></div>
+				</div>
+
+				<div id="overlay" style="display: none;"></div>
 				<div class="d-none d-md-block searchContainer" style="width: 325px; height: 100vh;">
 					<form class="d-flex justify-content-end" role="search">
 						<input class="form-control searchBar" id="searchBar" type="search" placeholder="Search" aria-label="Search">
 						<button class="btn btn-outline-success searchButton" type="submit">Search</button>
 					</form>
+					<div class="searchResults"></div>
 				</div>
 			</div>
 		{% endblock %}

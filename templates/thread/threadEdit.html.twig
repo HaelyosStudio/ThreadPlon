@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Thread
+{% endblock %}
+
+{% block body %}
+	<div class="threadCreationBox">
+		<h1>Edit Thread</h1>
+
+		{{ form_start(form, {'attr': {'class': 'column'}}) }}
+		<div class="creationFormItem">
+			{{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.title, {'attr': {'class': 'form-control', 'value': thread.title}}) }}
+		</div>
+		<div class="creationFormItem">
+			{{ form_label(form.category, 'Category', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+		</div>
+		<div class="creationFormItem">
+			{{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.description, {'attr': {'class': 'form-control', 'value': thread.description}}) }}
+		</div>
+        <div class="creationFormItem">
+			{{ form_label(form.main, 'Main', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.main, {'attr': {'class': 'form-control', 'value': thread.main}}) }}
+		</div>
+		<div class="creationFormItem createButtonBox">
+			<button type="submit" class="btn createbutton">Save Changes</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+
+{% endblock %}

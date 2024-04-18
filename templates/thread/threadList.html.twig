@@ -18,10 +18,10 @@
                                         <span class="badge bg-danger">Closed</span>
                                     {% endif %}
                                     <small class="text-muted">Edited:
-                                        {{ thread.edited|date('Y-m-d H:i:s') }}</small>
+                                        {{ thread.edited|date('d-m-Y H:i') }}</small>
                                 </div>
                                 <h1 class="card-title threadTitle">{{ thread.title }}</h1>
-                                <p class="card-text">{{ thread.main }}</p>
+                                <p class="card-text cardText">{{ thread.main }}</p>
                             </div>
                         </div>
                     </div>

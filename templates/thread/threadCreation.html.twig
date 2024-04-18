@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Thread
+{% endblock %}
+
+{% block body %}
+	<div class="threadCreationBox">
+		<h1>Create Thread</h1>
+
+		{{ form_start(form, {'attr': {'class': 'column'}}) }}
+		<div class="creationFormItem">
+			{{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="creationFormItem">
+			{{ form_label(form.category, 'Category', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+		</div>
+		<div class="creationFormItem">
+			{{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+		</div>
+        <div class="creationFormItem">
+			{{ form_label(form.main, 'Main', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_widget(form.main, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="creationFormItem createButtonBox">
+			<button type="submit" class="btn createbutton">Create</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+
+{% endblock %}

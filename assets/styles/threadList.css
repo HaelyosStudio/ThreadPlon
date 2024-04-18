@@ -12,3 +12,11 @@
         height: 1000px !important;
         overflow: auto;
 }
+
+.cardText {
+        color: var(--black) !important;
+}
+
+.responseMainText {
+        color: var(--black) !important;
+}
