@@ -32,10 +32,10 @@ class Response
     private Collection $responseVotes;
 
     #[ORM\ManyToOne(inversedBy: 'responses')]
-    private ?thread $thread = null;
+    private ?Thread $thread = null;
 
     #[ORM\ManyToOne(inversedBy: 'responses')]
-    private ?user $user = null;
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -91,6 +91,21 @@ class Response
         return $this->responseVotes;
     }
 
+    public function getTotalVotes(): int
+    {
+        $count = 0;
+        foreach ($this->getResponseVotes() as $vote) {
+            if ($vote->isVote()) {
+                $count++;
+            }
+
+            if (!$vote->isVote()) {
+                $count--;
+            }
+        }
+        return $count;
+    }
+
     public function addResponseVote(ResponseVote $responseVote): static
     {
         if (!$this->responseVotes->contains($responseVote)) {
@@ -113,24 +128,24 @@ class Response
         return $this;
     }
 
-    public function getThread(): ?thread
+    public function getThread(): ?Thread
     {
         return $this->thread;
     }
 
-    public function setThread(?thread $thread): static
+    public function setThread(?Thread $thread): static
     {
         $this->thread = $thread;
 
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?user $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 

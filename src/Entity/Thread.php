@@ -51,9 +51,9 @@ class Thread
     private ?User $user = null;
 
     /**
-     * @var Collection<int, category>
+     * @var Collection<int, Category>
      */
-    #[ORM\ManyToMany(targetEntity: category::class, inversedBy: 'threads')]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'threads')]
     private Collection $category;
 
     public function __construct()
@@ -154,6 +154,10 @@ class Thread
         foreach ($this->getThreadVotes() as $vote) {
             if ($vote->isVote()) {
                 $count++;
+            }
+
+            if (!$vote->isVote()) {
+                $count--;
             }
         }
         return $count;

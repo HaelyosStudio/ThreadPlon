@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Response as ResponseEntity;
+use App\Entity\ResponseVote;
 use App\Entity\Thread;
 use App\Entity\ThreadVote;
 use App\Form\ResponseCreationType;
 use App\Form\ThreadCreationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -35,17 +38,17 @@ class ThreadController extends AbstractController
         $thread->setCreated(new \DateTimeImmutable());
         $thread->setEdited(new \DateTimeImmutable());
         $thread->setUser($this->getUser());
-    
+
         $form = $this->createForm(ThreadCreationType::class, $thread);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($thread);
             $entityManager->flush();
-    
+
             return $this->redirectToRoute('app_thread_list', ['id' => $thread->getId()]);
         }
-    
+
         return $this->render('thread/threadCreation.html.twig', [
             'form' => $form
         ]);
@@ -58,48 +61,176 @@ class ThreadController extends AbstractController
         $threadRepository = $entityManager->getRepository(Thread::class);
 
         $threads = $threadRepository->find($id);
+        $responses = $threads->getResponses();
 
         return $this->render('thread/threadDetails.html.twig', [
-            'threads' => $threads
+            'threads' => $threads,
+            'responses' => $responses
         ]);
     }
 
-    #[Route('/thread/{id}/vote', name: 'app_thread_vote')]
-    public function vote(Thread $thread, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/thread/{id}/voteUp', name: 'app_thread_vote_up')]
+    public function voteUp(Thread $thread, Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $direction = $request->query->get('direction');
-    
-        if (!$user || !in_array($direction, ['up', 'down'])) {
+
+        if (!$user) {
             return new Response('Invalid request', 400);
         }
-    
+
+        $existingVote = $entityManager->getRepository(ThreadVote::class)->findOneBy([
+            'thread' => $thread,
+            'user' => $user
+        ]);
+
+        if ($existingVote) {
+            if (!$existingVote->isVote()) {
+                $existingVote->setVote(true);
+                $entityManager->flush();
+            } else {
+                $entityManager->remove($existingVote);
+                $entityManager->flush();
+            }
+
+            return $this->redirectToRoute('app_thread', ['id' => $thread->getId()]);
+        }
+
         $threadVote = new ThreadVote();
         $threadVote->setThread($thread);
         $threadVote->setUser($user);
-        $threadVote->setVote($direction === 'up');
-    
+        $threadVote->setVote(true);
+
         $entityManager->persist($threadVote);
         $entityManager->flush();
+
+        return $this->redirectToRoute('app_thread', ['id' => $thread->getId()]);
+    }
+
+    #[Route('/thread/{id}/voteDown', name: 'app_thread_vote_down')]
+    public function voteDown(Thread $thread, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return new Response('Invalid request', 400);
+        }
+
+        $existingVote = $entityManager->getRepository(ThreadVote::class)->findOneBy([
+            'thread' => $thread,
+            'user' => $user
+        ]);
+
+        if ($existingVote) {
+            if ($existingVote->isVote()) {
+                $existingVote->setVote(false);
+                $entityManager->flush();
+            } else {
+                $entityManager->remove($existingVote);
+                $entityManager->flush();
+            }
+
+            return $this->redirectToRoute('app_thread', ['id' => $thread->getId()]);
+        }
+
+        $threadVote = new ThreadVote();
+        $threadVote->setThread($thread);
+        $threadVote->setUser($user);
+        $threadVote->setVote(false);
+
+        $entityManager->persist($threadVote);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_thread', ['id' => $thread->getId()]);
+    }
+
+    #[Route('/response/{id}/voteUp', name: 'app_response_vote_up')]
+    public function voteResponseUp(ResponseEntity $response, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
     
-        $totalVotes = $thread->getTotalVotes();
+        if (!$user) {
+            return new Response('Invalid request', 400);
+        }
     
-        return new Response(sprintf('Vote recorded successfully. Total votes: %d', $totalVotes), 200);
+        $existingVote = $entityManager->getRepository(ResponseVote::class)->findOneBy([
+            'response' => $response,
+            'user' => $user
+        ]);
+    
+        if ($existingVote) {
+            if (!$existingVote->isVote()) {
+                $existingVote->setVote(true);
+                $entityManager->flush();
+            } else {
+                $entityManager->remove($existingVote);
+                $entityManager->flush();
+            }
+    
+            return $this->redirectToRoute('app_thread', ['id' => $response->getThread()->getId()]);
+        }
+    
+        $responseVote = new ResponseVote();
+        $responseVote->setResponse($response);
+        $responseVote->setUser($user);
+        $responseVote->setVote(true);
+    
+        $entityManager->persist($responseVote);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('app_thread', ['id' => $response->getThread()->getId()]);
     }
     
+
+    #[Route('/response/{id}/voteDown', name: 'app_response_vote_down')]
+    public function voteResponseDown(ResponseEntity $response, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+    
+        if (!$user) {
+            return new Response('Invalid request', 400);
+        }
+    
+        $existingVote = $entityManager->getRepository(ResponseVote::class)->findOneBy([
+            'response' => $response,
+            'user' => $user
+        ]);
+    
+        if ($existingVote) {
+            if ($existingVote->isVote()) {
+                $existingVote->setVote(false);
+                $entityManager->flush();
+            } else {
+                $entityManager->remove($existingVote);
+                $entityManager->flush();
+            }
+    
+            return $this->redirectToRoute('app_thread', ['id' => $response->getThread()->getId()]);
+        }
+    
+        $responseVote = new ResponseVote();
+        $responseVote->setResponse($response);
+        $responseVote->setUser($user);
+        $responseVote->setVote(false);
+    
+        $entityManager->persist($responseVote);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('app_thread', ['id' => $response->getThread()->getId()]);
+    }
+
     #[Route('/thread/{id}/edit', name: 'app_thread_edit')]
     public function editThread(Request $request, Thread $thread, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ThreadCreationType::class, $thread);
-    
+
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-    
-            return $this->redirectToRoute('app_thread_show', ['id' => $thread->getId()]);
+
+            return $this->redirectToRoute('app_thread_list', ['id' => $thread->getId()]);
         }
-    
+
         return $this->render('thread/threadEdit.html.twig', [
             'form' => $form->createView(),
             'thread' => $thread,
@@ -131,7 +262,19 @@ class ThreadController extends AbstractController
             'thread' => $thread,
         ]);
     }
-    
+
+    #[Route('/responses/{id}', name: 'app_response_delete', methods: ['DELETE', 'POST'])]
+    public function delete(ResponseEntity $response, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        if ($user === null || (!in_array('ROLE_ADMIN', $user->getRoles()) && $response->getUser() !== $user && $response->getThread()->getUser() !== $user)) {
+            throw new AccessDeniedException('You do not have permission to delete this response.');
+        }
+
+        $entityManager->remove($response);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_thread', ['id' => $response->getThread()->getId()]);
+    }
 }
-
-

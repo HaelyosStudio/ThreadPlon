@@ -69,3 +69,26 @@ option:not(:last-of-type) {
 }
 
 
+.deleteButton {
+    background-color: var(--danger);
+    color: var(--mainColor) !important;
+    border: none;
+    border-radius: 5px;
+    transition-duration: 0.3s;
+    width: 100px;
+    padding: 5px 10px;
+}
+
+.deleteButton:hover {
+    transition-duration: 0.3s;
+    background-color: var(--darkDanger);
+    color: var(--mainColor) !important;
+}
+
+.threadMainContainer {
+    padding: 275px 25px 80px 25px;
+    height: 900px !important;
+    overflow: auto;
+}
+
+

@@ -13,37 +13,52 @@ class ResponseVote
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'responseVotes')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
+    #[ORM\Column]
+    private ?bool $vote = null;
 
     #[ORM\ManyToOne(inversedBy: 'responseVotes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?response $response = null;
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'responseVotes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Response $response = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser(): ?user
+    public function isVote(): ?bool
+    {
+        return $this->vote;
+    }
+
+    public function setVote(bool $vote): static
+    {
+        $this->vote = $vote;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?user $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getResponse(): ?response
+    public function getResponse(): ?Response
     {
         return $this->response;
     }
 
-    public function setResponse(?response $response): static
+    public function setResponse(?Response $response): static
     {
         $this->response = $response;
 
